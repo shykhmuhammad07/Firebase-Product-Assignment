@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | FireAuth</title>
+    <link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-fire logo-icon"></i>
+        <span>FireAuth</span>
+      </div>
+      <div>
+        <a href="./user.html" class="nav-link">
+          <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+        </a>
+      </div>
+    </div>
+
+    <div class="cart-header">
+      <h1 class="cart-title">Your Shopping Cart</h1>
+      <p class="cart-subtitle">Review your items before checkout</p>
+    </div>
+
+    <div class="cart-container">
+      <div class="cart-items" id="get">
+        <!-- Cart Item 1 -->
+        <div class="cart-item">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Smart Watch" class="item-image">
+          <div class="item-content">
+            <div class="item-header">
+              <h3 class="item-name">Smart Watch Pro</h3>
+              <div class="item-price">$249.99</div>
+            </div>
+            <p class="item-desc">Premium smartwatch with health monitoring, GPS, and 7-day battery life.</p>
+            <div class="item-actions">
+              <div class="quantity-control">
+                <button class="qty-btn">-</button>
+                <input type="text" class="qty-input" value="1">
+                <button class="qty-btn">+</button>
+              </div>
+              <button class="remove-btn">
+                <i class="fas fa-trash mr-2"></i> Remove
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cart Item 2 -->
+        <div class="cart-item">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Headphones" class="item-image">
+          <div class="item-content">
+            <div class="item-header">
+              <h3 class="item-name">Wireless Headphones</h3>
+              <div class="item-price">$129.99</div>
+            </div>
+            <p class="item-desc">Noise-cancelling headphones with 40h battery life and premium sound quality.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+</body>
+</html>
+    <script type="module" src="cart.js"></script>
+</body>
+</html>

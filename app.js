@@ -1,6 +1,6 @@
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { auth, db } from "./config.js";
-import { collection, addDoc, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { collection, addDoc, getDocs,getDoc, Timestamp, doc, deleteDoc,  updateDoc  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // DOM Elements
 const modal = document.getElementById("modal");
@@ -40,9 +40,10 @@ modalForm.addEventListener("submit", async (e) => {
 
   const productName = modalForm["productName"].value.trim();
   const productDesc = modalForm["productDesc"].value.trim();
+  const productPrice = modalForm["productPrice"].value.trim();
   const url = modalForm["Image Url"].value.trim();
 
-  if (!productName || !productDesc || !url) {
+  if (!productName || !productDesc || !url || !productPrice) {
     Swal.fire({
       icon: "error",
       title: "Please fill all fields",
@@ -55,7 +56,8 @@ modalForm.addEventListener("submit", async (e) => {
       image:url,
       name: productName,
       description: productDesc,
-      createdAt: Timestamp.now(),
+      price:productPrice,
+      createdAt:Timestamp.now() ,
       userId: auth.currentUser.uid, 
     });
 
@@ -112,16 +114,16 @@ async function loadProducts() {
     querySnapshot.forEach((doc) => {
       const product = doc.data();
       const productCard = `
-      <div class="card" style="width: 18rem;">
+      <div class="card"  style="--animation-order: 2">
   <img src="${product.image}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">${product.name}</h5>
     <p class="card-text">${product.description}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+    <p class="card-price">${product.price}</p>
+    <button class="btn btn-outline" onclick="editItem('${doc.id}')"><i class="fas fa-edit mr-2"></i> Edit </button>
+<button class="btn btn-danger" onclick="deleteItem('${doc.id}')"><i class="fas fa-trash mr-2"></i> Delete</button>
 </div>
-
-      `;
+</div>`;
       productsContainer.innerHTML += productCard;
     });
     
@@ -143,3 +145,51 @@ async function loadProducts() {
     });
   }
 }
+
+// ✅ DELETE FUNCTION
+async function deleteItem(id) {
+  await deleteDoc(doc(db, "products", id));
+  loadProducts();
+}
+window.deleteItem = deleteItem;
+
+// ✅ EDIT FUNCTION
+async function editItem(id) {
+  const productRef = doc(db, "products", id);
+  const snap = await getDoc(productRef);
+
+  if (!snap.exists()) {
+    alert("Product not found");
+    return;
+  }
+
+  const data = snap.data();
+
+  // Prompt user for new values (default value = existing value)
+  const newName = prompt("Enter new product name:", data.name || "");
+  if (newName === null) return; // Cancelled
+
+  const newDescription = prompt("Enter new product description:", data.description || "");
+  if (newDescription === null) return;
+
+  const newPrice = prompt("Enter new product price:", data.price || "");
+  if (newPrice === null) return;
+
+  const newImage = prompt("Enter new image URL:", data.image || "");
+  if (newImage === null) return;
+
+  // Update Firestore
+  await updateDoc(productRef, {
+    name: newName,
+    description: newDescription,
+    price: newPrice,
+    image: newImage
+  });
+
+  alert("Product updated successfully!");
+  loadProducts(); // Refresh product list
+}
+
+window.editItem = editItem;
+
+

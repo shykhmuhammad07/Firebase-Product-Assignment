@@ -28,7 +28,7 @@ if (signinBtn) {
     e.preventDefault();
     const email = document.getElementById("lemail").value.trim();
     const password = document.getElementById("lpass").value.trim();
-
+    
     if (!email || !password) {
       Swal.fire({
         icon: "warning",
@@ -38,16 +38,22 @@ if (signinBtn) {
       });
       return;
     }
-
+    
+    const adminEmail = "admin12@gmail.com"
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password,adminEmail);
       Swal.fire({
         title: "Welcome Back!",
         text: `Logged in as ${userCredential.user.email}`,
         icon: "success",
         confirmButtonColor: "#4F46E5",
       }).then(() => {
-        window.location.href = "./index.html";
+
+        if(userCredential.user.email === adminEmail){
+          window.location = "./index.html";
+        }else{
+          window.location = "./user.html"
+        }
       });
     } catch (error) {
       Swal.fire({
