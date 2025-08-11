@@ -41,7 +41,7 @@ modalForm.addEventListener("submit", async (e) => {
   const productName = modalForm["productName"].value.trim();
   const productDesc = modalForm["productDesc"].value.trim();
   const productPrice = modalForm["productPrice"].value.trim();
-  const url = modalForm["Image Url"].value.trim();
+  const url = modalForm["imageUrl"].value.trim();
 
   if (!productName || !productDesc || !url || !productPrice) {
     Swal.fire({
