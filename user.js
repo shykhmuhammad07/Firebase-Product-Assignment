@@ -100,7 +100,7 @@ async function addToCart(id, name, description, price, image,btnElement) {
 
       return;
     }
-
+    
     await addDoc(collection(db, `carts/${user.uid}/items`), {
       productId: id,
       name,
