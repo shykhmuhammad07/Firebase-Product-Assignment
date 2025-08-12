@@ -4,7 +4,9 @@ import {
   addDoc,
   query,
   where,
-  onSnapshot 
+  onSnapshot,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { auth, db } from "./config.js";
@@ -46,7 +48,8 @@ async function loadProducts() {
             '${product.name}',
             '${product.description}',
             '${product.price}',
-            '${product.image}'
+            '${product.image}',
+            '${btnId}'
           )" class="btn btn-primary">Add Product</a>
         </div>
       </div>`;
@@ -58,23 +61,29 @@ async function loadProducts() {
       onSnapshot(q, (snap) => {
         const btn = document.getElementById(btnId);
         if (btn) {
-          btn.disabled = !snap.empty; // disable if in cart, enable if removed
+          btn.disabled = !snap.empty; // disable if in cart
         }
       });
     }
   });
 }
 
-
-function startCartCounter(uid) {
+async function startCartCounter(uid) {
   const cartRef = collection(db, `carts/${uid}/items`);
+
+  // Initial fetch so count shows instantly
+  const initialSnap = await getDocs(cartRef);
+  cartCount = initialSnap.size;
+  updateCartButton();
+
+  // Real-time updates
   onSnapshot(cartRef, (snapshot) => {
     cartCount = snapshot.size;
     updateCartButton();
   });
 }
 
-async function addToCart(id, name, description, price, image,btnElement) {
+async function addToCart(id, name, description, price, image, btnId) {
   try {
     const user = auth.currentUser;
     if (!user) {
@@ -86,22 +95,21 @@ async function addToCart(id, name, description, price, image,btnElement) {
       return;
     }
 
-     let cartRef = collection(db,  `carts/${user.uid}/items`)
-     const q = query(cartRef, where("productId", "==", id))
-     const querySnap = await getDocs(q);
+    let cartRef = collection(db, `carts/${user.uid}/items`);
+    const q = query(cartRef, where("productId", "==", id));
+    const querySnap = await getDocs(q);
 
-       if (!querySnap.empty) {
+    if (!querySnap.empty) {
       Swal.fire({
         icon: "info",
         title: "Already in Cart",
         text: "This product is already in your cart.",
       });
-      document.getElementById(`btn-${id}`).disabled = true;
-
+      document.getElementById(btnId).disabled = true;
       return;
     }
-    
-    await addDoc(collection(db, `carts/${user.uid}/items`), {
+
+    await addDoc(cartRef, {
       productId: id,
       name,
       description,
@@ -111,8 +119,7 @@ async function addToCart(id, name, description, price, image,btnElement) {
       createdAt: new Date()
     });
 
-     let btnElement = document.getElementById(`btn-${id}`);
-btnElement.disabled = true; 
+    document.getElementById(btnId).disabled = true;
 
     Swal.fire({
       title: "Product Added to Cart!",
@@ -141,8 +148,30 @@ function Order() {
   window.location = './cart.html';
 }
 
+// Optional: function to remove from cart (for decrease)
+async function removeFromCart(itemId) {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
+    const itemRef = doc(db, `carts/${user.uid}/items/${itemId}`);
+    await deleteDoc(itemRef);
+    Swal.fire({
+      icon: "success",
+      title: "Removed",
+      text: "Product removed from cart."
+    });
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error Removing",
+      text: error.message
+    });
+  }
+}
+
 window.addToCart = addToCart;
 window.Order = Order;
+window.removeFromCart = removeFromCart; // export if you want to call from cart.html
 
 document.getElementById("logout").addEventListener('click', () => {
   signOut(auth).then(() => {
