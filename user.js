@@ -37,22 +37,23 @@ async function loadProducts() {
     let btnId = `btn-${docSnap.id}`; // unique id for each button
 
     fetching.innerHTML += `
-      <div class="card" style="width: 18rem;">
-        <img src="${product.image}" class="card-img-top" alt="${product.name}">
-        <div class="card-body">
-          <h5 class="card-title">Name: ${product.name}</h5>
-          <p class="card-text">Description: ${product.description}</p>
-          <p class="card-text">Price: ${product.price}</p>
-          <a href="#" id="${btnId}" onclick="addToCart(
-            '${docSnap.id}',
-            '${product.name}',
-            '${product.description}',
-            '${product.price}',
-            '${product.image}',
-            '${btnId}'
-          )" class="btn btn-primary">Add Product</a>
-        </div>
-      </div>`;
+
+      <div class="card-1"  style="--animation-order: 2">
+  <img src="${product.image}" class="card-img-top" alt="${product.name}">
+  <div class="card-body">
+    <h5 class="card-title">${product.name}</h5>
+    <p class="card-text">${product.description}</p>
+    <p class="card-price">${product.price}</p>
+     <a href="#" id="${btnId}" onclick="addToCart(
+      //       '${docSnap.id}',
+      //       '${product.name}',
+      //       '${product.description}',
+      //       '${product.price}',
+      //       '${product.image}',
+      //       '${btnId}'
+      //     )" class="btn btn-primary">Add Product</a>
+</div>
+</div>`;
 
     // Real-time listener for each product to enable/disable button
     if (uid) {

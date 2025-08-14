@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
         productCounts = {};
 
         if (querySnapshot.empty) {
-          get.innerHTML = "<p>Your cart is empty.</p>";
+          get.innerHTML = "<p class='empty-cart fa-solid fa-cart-flatbed-empty'> Your cart is empty.</p>";
           return;
         }
 
@@ -48,9 +48,13 @@ window.addEventListener("DOMContentLoaded", async (e) => {
                   <div class="item-price">Price: ${item.price}</div>
                 </div>
                 <p class="item-desc">Description: ${item.description}</p>
-                <button onclick="increase('${docSnap.id}')" class="btn btn-success">+</button>
-                <p id="count-${docSnap.id}" class="d-flex justify-content-center">${productCounts[docSnap.id]}</p>
-                <button onclick="decrease('${docSnap.id}')" class="btn btn-danger">-</button>
+                 <div class="item-actions">
+                            <div class="quantity-control">
+                                <button onclick="increase('${docSnap.id}')" class="qty-btn">+</button>
+                                <input  id="count-${docSnap.id}" type="text" value= "1" class="qty-input"${productCounts[docSnap.id]}>
+                                <button  onclick="decrease('${docSnap.id}')"  class="qty-btn">-</button>
+                            </div>
+                            
               </div>
             </div>
           `;
