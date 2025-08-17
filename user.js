@@ -6,12 +6,15 @@ import {
   where,
   onSnapshot,
   deleteDoc,
-  doc
+  doc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { auth, db } from "./config.js";
 
-let orderbtn = document.getElementById('order');
+let orderbtn = document.getElementById("order");
 let cartCount = 0;
 
 // Auth check
@@ -25,7 +28,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 async function loadProducts() {
-  let fetching = document.getElementById('fetching');
+  let fetching = document.getElementById("fetching");
   const querySnapshot = await getDocs(collection(db, "products"));
   fetching.innerHTML = "";
 
@@ -45,13 +48,13 @@ async function loadProducts() {
     <p class="card-text">${product.description}</p>
     <p class="card-price">${product.price}</p>
      <a href="#" id="${btnId}" onclick="addToCart(
-      //       '${docSnap.id}',
-      //       '${product.name}',
-      //       '${product.description}',
-      //       '${product.price}',
-      //       '${product.image}',
-      //       '${btnId}'
-      //     )" class="btn btn-primary">Add Product</a>
+            '${docSnap.id}',
+            '${product.name}',
+            '${product.description}',
+            '${product.price}',
+            '${product.image}',
+            '${btnId}'
+          )" class="btn btn-primary">Add Product</a>
 </div>
 </div>`;
 
@@ -117,7 +120,7 @@ async function addToCart(id, name, description, price, image, btnId) {
       price,
       image,
       quantity: 1,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
 
     document.getElementById(btnId).disabled = true;
@@ -129,7 +132,7 @@ async function addToCart(id, name, description, price, image, btnId) {
         <strong>Description:</strong> ${description} <br>
         <strong>Price:</strong> ${price}
       `,
-      icon: "success"
+      icon: "success",
     });
   } catch (error) {
     console.error("Error adding product to cart:", error);
@@ -146,7 +149,7 @@ function updateCartButton() {
 }
 
 function Order() {
-  window.location = './cart.html';
+  window.location = "./cart.html";
 }
 
 // Optional: function to remove from cart (for decrease)
@@ -159,13 +162,13 @@ async function removeFromCart(itemId) {
     Swal.fire({
       icon: "success",
       title: "Removed",
-      text: "Product removed from cart."
+      text: "Product removed from cart.",
     });
   } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Error Removing",
-      text: error.message
+      text: error.message,
     });
   }
 }
@@ -174,22 +177,24 @@ window.addToCart = addToCart;
 window.Order = Order;
 window.removeFromCart = removeFromCart; // export if you want to call from cart.html
 
-document.getElementById("logout").addEventListener('click', () => {
-  signOut(auth).then(() => {
-    Swal.fire({
-      title: "Logged Out!",
-      text: "You have been successfully logged out",
-      icon: "success",
-      confirmButtonColor: "#4F46E5",
-    }).then(() => {
-      window.location.href = "./login.html";
+document.getElementById("logout").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      Swal.fire({
+        title: "Logged Out!",
+        text: "You have been successfully logged out",
+        icon: "success",
+        confirmButtonColor: "#4F46E5",
+      }).then(() => {
+        window.location.href = "./login.html";
+      });
+    })
+    .catch((error) => {
+      console.error("Error signing out:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Logout Failed",
+        text: error.message,
+      });
     });
-  }).catch((error) => {
-    console.error("Error signing out:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Logout Failed",
-      text: error.message,
-    });
-  });
 });

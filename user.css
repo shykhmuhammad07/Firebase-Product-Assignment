@@ -99,8 +99,10 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
-/* Button styles */
-.btn {
+.btn-outline {
+  background: transparent;
+  color: var(--danger);
+  border: 2px solid var(--accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -115,15 +117,9 @@ header {
   letter-spacing: 0.5px;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--accent);
-  border: 2px solid var(--accent);
-}
-
 .btn-outline:hover {
-  background-color: var(--accent);
-  color: var(--dark-bg);
+  background-color: var(--dark-bg);
+  color: var(--secondary);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 242, 195, 0.3);
 }

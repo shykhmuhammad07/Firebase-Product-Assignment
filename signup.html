@@ -1,69 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | Firebase Auth</title>
-  <link rel="stylesheet" href="auth.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header>
-    <div class="container flex items-center justify-between">
-      <div class="logo">
-        <i class="fas fa-fire logo-icon"></i>
-        <span>FireAuth</span>
-      </div>
-    </div>
-  </header>
-
-  <main class="auth-page">
-    <div class="container">
-      <div class="auth-container">
-        <div class="card auth-card">
-          <div class="auth-header">
-            <h1 class="auth-title">Create Account</h1>
-            <p class="auth-subtitle">Get started with your free account</p>
-          </div>
-          
-          <form id="signup-form">
-            <div class="form-group">
-              <label for="email" class="form-label">Email Address</label>
-              <div class="relative">
-                <input type="email" id="email" class="form-control" required placeholder="you@example.com">
-                <i class="fas fa-envelope absolute right-3 top-3 text-gray-400"></i>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="pass" class="form-label">Password</label>
-              <div class="relative">
-                <input type="password" id="pass" class="form-control" required placeholder="••••••••">
-                <i class="fas fa-lock absolute right-3 top-3 text-gray-400"></i>
-              </div>
-            </div>
-            
-            <button type="submit" id="btn" class="btn btn-primary btn-block mb-4">
-              <i class="fas fa-user-plus mr-2"></i> Create Account
-            </button>
-
-            <div class="divider">or sign up with</div>
-
-            <button id="google-btn" class="btn btn-google btn-block">
-              <i class="fab fa-google mr-2"></i> Sign up with Google
-            </button>
-
-            <div class="auth-footer mt-4">
-              Already have an account? <a href="login.html" class="auth-link">Login</a>
-            </div>
-          </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Firebase Auth</title>
+    <link rel="stylesheet" href="auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container flex items-center justify-between">
+        <div class="logo">
+          <i class="fas fa-fire logo-icon"></i>
+          <span>FireAuth</span>
         </div>
       </div>
-    </div>
-  </main>
+    </header>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script type="module" src="auth.js"></script>
-</body>
+    <main class="auth-page">
+      <div class="container">
+        <div class="auth-container">
+          <div class="card auth-card">
+            <div class="auth-header">
+              <h1 class="auth-title">Create Account</h1>
+              <p class="auth-subtitle">Get started with your free account</p>
+            </div>
+
+            <form id="signup-form">
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <div class="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    required
+                    placeholder="you@example.com"
+                  />
+                  <i
+                    class="fas fa-envelope absolute right-3 top-3 text-gray-400"
+                  ></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="pass" class="form-label">Password</label>
+                <div class="relative">
+                  <input
+                    type="password"
+                    id="pass"
+                    class="form-control"
+                    required
+                    placeholder="••••••••"
+                  />
+                  <i
+                    class="fas fa-lock absolute right-3 top-3 text-gray-400"
+                  ></i>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                id="btn"
+                class="btn btn-primary btn-block mb-4"
+              >
+                <i class="fas fa-user-plus mr-2"></i> Create Account
+              </button>
+
+              <div class="divider">or sign up with</div>
+
+              <button id="google-btn" class="btn btn-google btn-block">
+                <i class="fab fa-google mr-2"></i> Sign up with Google
+              </button>
+
+              <div class="auth-footer mt-4">
+                Already have an account?
+                <a href="login.html" class="auth-link">Login</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="auth.js"></script>
+  </body>
 </html>

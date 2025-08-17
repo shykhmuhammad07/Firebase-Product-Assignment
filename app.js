@@ -1,6 +1,18 @@
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { auth, db } from "./config.js";
-import { collection, addDoc, getDocs,getDoc, Timestamp, doc, deleteDoc,  updateDoc  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  Timestamp,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // DOM Elements
 const modal = document.getElementById("modal");
@@ -53,12 +65,12 @@ modalForm.addEventListener("submit", async (e) => {
 
   try {
     await addDoc(collection(db, "products"), {
-      image:url,
+      image: url,
       name: productName,
       description: productDesc,
-      price:productPrice,
-      createdAt:Timestamp.now() ,
-      userId: auth.currentUser.uid, 
+      price: productPrice,
+      createdAt: Timestamp.now(),
+      userId: auth.currentUser.uid,
     });
 
     Swal.fire({
@@ -67,11 +79,10 @@ modalForm.addEventListener("submit", async (e) => {
       icon: "success",
       confirmButtonColor: "#4F46E5",
     });
-    
+
     modal.classList.remove("active");
     modalForm.reset();
     loadProducts();
-
   } catch (error) {
     console.error("Error adding product: ", error);
     Swal.fire({
@@ -110,7 +121,7 @@ async function loadProducts() {
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
     productsContainer.innerHTML = "";
-    
+
     querySnapshot.forEach((doc) => {
       const product = doc.data();
       const productCard = `
@@ -126,7 +137,7 @@ async function loadProducts() {
 </div>`;
       productsContainer.innerHTML += productCard;
     });
-    
+
     if (querySnapshot.empty) {
       productsContainer.innerHTML = `
         <div class="col-span-full text-center py-12">
@@ -135,7 +146,6 @@ async function loadProducts() {
         </div>
       `;
     }
-       
   } catch (error) {
     console.error("Error loading products: ", error);
     Swal.fire({
@@ -169,7 +179,10 @@ async function editItem(id) {
   const newName = prompt("Enter new product name:", data.name || "");
   if (newName === null) return; // Cancelled
 
-  const newDescription = prompt("Enter new product description:", data.description || "");
+  const newDescription = prompt(
+    "Enter new product description:",
+    data.description || ""
+  );
   if (newDescription === null) return;
 
   const newPrice = prompt("Enter new product price:", data.price || "");
@@ -183,7 +196,7 @@ async function editItem(id) {
     name: newName,
     description: newDescription,
     price: newPrice,
-    image: newImage
+    image: newImage,
   });
 
   alert("Product updated successfully!");
@@ -191,5 +204,3 @@ async function editItem(id) {
 }
 
 window.editItem = editItem;
-
-

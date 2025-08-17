@@ -13,7 +13,7 @@ let productCounts = {};
 
 window.addEventListener("DOMContentLoaded", async (e) => {
   e.preventDefault();
-  
+
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location = "./login.html";
@@ -50,11 +50,10 @@ window.addEventListener("DOMContentLoaded", async (e) => {
                 <p class="item-desc">Description: ${item.description}</p>
                  <div class="item-actions">
                             <div class="quantity-control">
-                                <button onclick="increase('${docSnap.id}')" class="qty-btn">+</button>
-                                <input  id="count-${docSnap.id}" type="text" value= "1" class="qty-input"${productCounts[docSnap.id]}>
-                                <button  onclick="decrease('${docSnap.id}')"  class="qty-btn">-</button>
+                              <button onclick="increase('${docSnap.id}')" class="qty-btn">+</button>
+                  <input  id="count-${docSnap.id}" type="text" value= "${productCounts[docSnap.id]}" class="qty-input">
+                <button  onclick="decrease('${docSnap.id}')"  class="qty-btn">-</button>
                             </div>
-                            
               </div>
             </div>
           `;
